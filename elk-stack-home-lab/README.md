@@ -48,6 +48,7 @@ O lab é composto por **3 máquinas físicas/virtuais** na mesma rede local:
 │   └──────────────────────────┘                             │
 └────────────────────────────────────────────────────────────┘
 ```
+
 ---
 
 ## Stack Tecnológica
