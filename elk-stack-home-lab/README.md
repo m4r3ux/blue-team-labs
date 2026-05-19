@@ -35,22 +35,19 @@ O lab é composto por **3 máquinas físicas/virtuais** na mesma rede local:
 │  │  • Kibana UI    │         │  • Kibana                │  │
 │  │  • Operação     │         │  • elastic-start (local) │  │
 │  │  • Hunting      │         │                          │  │
-│  └─────────────────┘         └──────────┬───────────────┘  │
-│                                         │                  │
-│                              ┌──────────▼───────────────┐  │
-│                              │  Windows 10 VM           │  │
-│                              │  (WINLAB)                │  │
-│                              │                          │  │
-│                              │  • Winlogbeat 9.4.1      │  │
-│                              │  • Sysmon                │  │
-│                              │  • Elastic Agent         │  │
-│                              │  → envia logs ao ELK     │  │
-│                              └──────────────────────────┘  │
+│  └─────────────────┘         └──────────────────────────┘  │
+│              │                                             │
+│   ┌──────────▼───────────────┐                             │
+│   │  Windows 10 VM           │                             │
+│   │  (WINLAB)                │                             │
+│   │                          │                             │
+│   │  • Winlogbeat 9.4.1      │                             │
+│   │  • Sysmon                │                             │
+│   │  • Elastic Agent         │                             │
+│   │  → envia logs ao ELK     │                             │
+│   └──────────────────────────┘                             │
 └────────────────────────────────────────────────────────────┘
 ```
-
-> 📷 [`screenshots/architecture/soc_diagram.png`](screenshots/architecture/soc_diagram.png)
-
 ---
 
 ## Stack Tecnológica
@@ -66,25 +63,30 @@ O lab é composto por **3 máquinas físicas/virtuais** na mesma rede local:
 | Windows 10 Pro | 10.0.19041 | Endpoint monitorado — `WINLAB` |
 
 ---
-
 ## Configuração do Ambiente
 
 ### Ubuntu Server — ELK Host
 
-O stack foi iniciado com o utilitário local `elastic-start`, que sobe Elasticsearch e Kibana sem necessidade de configuração manual de serviços:
+O stack foi iniciado utilizando o script oficial `start-local` da Elastic, executado via Docker Compose para ambiente local de desenvolvimento e testes.
 
 ```bash
-# Subir o stack
-./elastic-start
-
-# Elasticsearch disponível em:
-# http://<ip-servidor>:9200
-
-# Kibana disponível em:
-# http://<ip-servidor>:5601
+# Baixar e iniciar Elasticsearch + Kibana
+curl -fsSL https://elastic.co/start-local | sh
 ```
 
-> O Kibana é acessado pelo Ubuntu principal via browser na rede local (`192.168.1.100:5601`).
+Após a execução do script, os serviços ficam disponíveis nos seguintes endpoints:
+
+```bash
+# Elasticsearch
+http://<ip-servidor>:9200
+
+# Kibana
+http://<ip-servidor>:5601
+```
+
+> O Kibana é acessado pelo Ubuntu principal via navegador na rede local (`192.168.1.100:5601`).
+
+> Este ambiente foi configurado apenas para fins de laboratório/homelab, conforme recomendado pela documentação oficial da Elastic.
 
 ---
 
